@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>YieldYak – LET IT YAK</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="YieldYak – a meme-fueled yield beast. LET IT YAK. ATTACK THE YAK." />
+  <style>
+    :root {
+      --bg: #030712;
+      --bg-soft: #050816;
+      --accent: #7ef29a;
+      --accent-soft: #143826;
+      --accent-2: #ffb347;
+      --text: #f9fafb;
+      --muted: #9ca3af;
+      --border: #1f2933;
+      --danger: #f97373;
+      --radius-xl: 22px;
+      --radius-pill: 999px;
+      --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.65);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #020617 55%, #000 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 24px 16px 56px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #ffffff 0, #facc15 15%, #f97316 45%, #7c2d12 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.4),
+        0 14px 35px rgba(0, 0, 0, 0.7);
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      font-size: 18px;
+      color: #111827;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-text strong {
+      font-size: 18px;
+      letter-spacing: 0.08em;
+    }
+
+    .brand-text span {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      text-decoration: none;
+      color: var(--muted);
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: all 0.18s ease-out;
+    }
+
+    .nav-links a:hover {
+      border-color: rgba(148, 163, 184, 0.6);
+      color: var(--text);
+      background: rgba(15, 23, 42, 0.7);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: var(--radius-pill);
+      padding: 4px 10px 4px 4px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: var(--muted);
+      font-size: 11px;
+      text-decoration: none;
+      backdrop-filter: blur(16px);
+    }
+
+    .pill span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      width: 20px;
+      height: 20px;
+      font-size: 11px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #022c22;
+      font-weight: 700;
+    }
+
+    .pill b {
+      color: var(--accent);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.6fr);
+      gap: 26px;
+      align-items: stretch;
+    }
+
+    @media (max-width: 880px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav-links {
+        justify-content: flex-start;
+      }
+    }
+
+    .hero-card {
+      background: radial-gradient(circle at top left, #0f172a 0, #020617 60%);
+      border-radius: var(--radius-xl);
+      padding: 22px 22px 20px;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -120px;
+      background:
+        radial-gradient(circle at top left, rgba(125, 211, 252, 0.18) 0, transparent 55%),
+        radial-gradient(circle at 70% 40%, rgba(74, 222, 128, 0.15) 0, transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      border-radius: var(--radius-pill);
+      padding: 4px 10px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.85);
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(circle, #bbf7d0 0, #22c55e 30%, #166534 100%);
+      box-shadow: 0 0 18px rgba(34, 197, 94, 0.7);
+    }
+
+    .badge-pill {
+      font-size: 11px;
+      border-radius: var(--radius-pill);
+      padding: 4px 10px;
+      border: 1px solid rgba(74, 222, 128, 0.6);
+      background: rgba(5, 46, 22, 0.92);
+      color: #bbf7d0;
+    }
+
+    h1 {
+      font-size: clamp(32px, 4vw, 40px);
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    h1 span {
+      background: linear-gradient(135deg, #bbf7d0 0%, #facc15 50%, #fb923c 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-sub {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 18px;
+      max-width: 32rem;
+    }
+
+    .hero-sub b {
+      color: #e5e7eb;
+      font-weight: 600;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .btn {
+      border-radius: var(--radius-pill);
+      padding: 10px 18px;
+      font-size: 14px;
+      border: 1px solid transparent;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.16s ease-out;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #022c22;
+      font-weight: 600;
+      box-shadow: 0 12px 35px rgba(34, 197, 94, 0.55);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 42px rgba(34, 197, 94, 0.75);
+    }
+
+    .btn-secondary {
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text);
+      border-color: rgba(148, 163, 184, 0.6);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(15, 23, 42, 1);
+      border-color: rgba(148, 163, 184, 0.9);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border-color: rgba(55, 65, 81, 0.7);
+    }
+
+    .btn-ghost:hover {
+      color: var(--text);
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    .hero-footnote {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .hero-footnote strong {
+      color: #e5e7eb;
+    }
+
+    .stats-card {
+      background: radial-gradient(circle at 10% 0, #111827 0, #020617 55%);
+      border-radius: var(--radius-xl);
+      padding: 18px 18px 16px;
+      border: 1px solid rgba(30, 64, 175, 0.7);
+      box-shadow: 0 18px 50px rgba(15, 23, 42, 0.95);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stats-card::before {
+      content: "";
+      position: absolute;
+      inset: -140px 20% auto auto;
+      height: 260px;
+      width: 260px;
+      border-radius: 50%;
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      box-shadow:
+        0 0 60px rgba(96, 165, 250, 0.4),
+        inset 0 0 40px rgba(15, 23, 42, 1);
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    .yak-chip {
+      align-self: flex-start;
+      background: rgba(15, 23, 42, 0.95);
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      padding: 4px 10px;
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 1;
+    }
+
+    .yak-chip span {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: conic-gradient(from 140deg, #f97316, #fb7185, #facc15, #f97316);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #111827;
+      font-weight: 800;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      z-index: 1;
+    }
+
+    .stat {
+      background: rgba(15, 23, 42, 0.96);
+      border-radius: 16px;
+      padding: 10px 11px;
+      border: 1px solid rgba(55, 65, 81, 0.8);
+      backdrop-filter: blur(14px);
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .stat-value {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .stat-value span {
+      font-size: 12px;
+      color: var(--muted);
+      margin-left: 4px;
+    }
+
+    .stat--primary .stat-value {
+      color: var(--accent);
+    }
+
+    .stat--danger .stat-value {
+      color: var(--danger);
+    }
+
+    .stat-note {
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .stat-note strong {
+      color: #e5e7eb;
+    }
+
+    .section {
+      margin-top: 8px;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 18px;
+    }
+
+    @media (max-width: 880px) {
+      .section-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .card {
+      background: rgba(2, 6, 23, 0.98);
+      border-radius: 20px;
+      border: 1px solid rgba(30, 64, 175, 0.5);
+      padding: 16px 18px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
+    }
+
+    .card h2 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .tokenomics-list {
+      list-style: none;
+      font-size: 13px;
+      color: var(--muted);
+      display: grid;
+      gap: 4px;
+      margin-bottom: 6px;
+    }
+
+    .tokenomics-list li strong {
+      color: #e5e7eb;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(75, 85, 99, 0.8);
+      color: var(--muted);
+    }
+
+    .two-col-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .two-col-row .btn {
+      flex: 1 1 130px;
+      justify-content: center;
+    }
+
+    footer {
+      font-size: 11px;
+      color: var(--muted);
+      padding: 0 16px 20px;
+      text-align: center;
+    }
+
+    footer a {
+      color: #93c5fd;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">
+        <div class="logo-circle">YY</div>
+        <div class="brand-text">
+          <strong>YIELDYAK</strong>
+          <span>LET IT YAK · MEME YIELD TOKEN</span>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="#about">About</a>
+        <a href="#tokenomics">Tokenomics</a>
+        <a href="#how-to-buy">How to Buy</a>
+        <a href="#community">Community</a>
+      </nav>
+    </header>
+
+    <a class="pill" href="#tokenomics">
+      <span>⚡</span>
+      <b>ATTACK THE YAK</b> · Meme-first. Yield-obsessed.
+    </a>
+
+    <main class="hero">
+      <section class="hero-card">
+        <div class="hero-inner">
+          <div class="badge-row">
+            <div class="badge">
+              <div class="badge-dot"></div>
+              MEME COIN · FAIR LAUNCH
+            </div>
+            <div class="badge-pill">Utility-minded · Degens approved</div>
+          </div>
+
+          <h1>
+            LET IT <span>YAK</span>.
+          </h1>
+          <p class="hero-sub">
+            <b>YieldYak</b> is a meme coin mascot for degen yields – a loud,
+            unstoppable yak charging at APR. No promises, just pure on-chain
+            chaos and community-driven utility.
+          </p>
+
+          <div class="hero-cta-row">
+            <!-- Replace these hrefs with your real links -->
+            <a class="btn btn-primary" href="https://dex-link-here" target="_blank" rel="noopener noreferrer">
+              🧮 Buy YIELDYAK
+            </a>
+            <a class="btn btn-secondary" href="https://chart-link-here" target="_blank" rel="noopener noreferrer">
+              📈 View Chart
+            </a>
+            <a class="btn btn-ghost" href="#community">
+              👥 Join the herd
+            </a>
+          </div>
+
+          <p class="hero-footnote">
+            <strong>⚠️ No financial advice.</strong> YIELDYAK is a meme token
+            with experimental utility. Only risk what you can afford to lose.
+          </p>
+        </div>
+      </section>
+
+      <aside class="stats-card">
+        <div class="yak-chip">
+          <span>YK</span>
+          YIELDYAK live at a glance
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat stat--primary">
+            <div class="stat-label">Ticker</div>
+            <div class="stat-value">$YIELDYAK</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Chain</div>
+            <div class="stat-value">
+              TBA
+              <span>(L1 / L2)</span>
+            </div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Total Supply</div>
+            <div class="stat-value">
+              21,000,000
+              <span>YIELDYAK</span>
+            </div>
+          </div>
+          <div class="stat stat--danger">
+            <div class="stat-label">Taxes</div>
+            <div class="stat-value">0% / 0%</div>
+          </div>
+        </div>
+
+        <p class="stat-note">
+          <strong>Note:</strong> Values above are placeholders. Update this panel
+          as contracts and liquidity go live.
+        </p>
+      </aside>
+    </main>
+
+    <section id="about" class="section">
+      <div class="section-grid">
+        <article id="tokenomics" class="card">
+          <h2>Tokenomics – How the Yak is Fed</h2>
+          <p>
+            Keep it simple, transparent, and meme-driven. Adjust numbers to match your
+            real deployment.
+          </p>
+          <ul class="tokenomics-list">
+            <li><strong>Total Supply:</strong> 21,000,000 YIELDYAK</li>
+            <li><strong>Liquidity:</strong> 60% – initial pool &amp; expansions</li>
+            <li><strong>Community &amp; Rewards:</strong> 25%</li>
+            <li><strong>Team &amp; Dev:</strong> 10% (cliff + vesting)</li>
+            <li><strong>Marketing &amp; Partnerships:</strong> 5%</li>
+          </ul>
+          <div class="tag-row">
+            <span class="tag">No hidden mints</span>
+            <span class="tag">Liquidity lock recommended</span>
+            <span class="tag">Contract renounce optional</span>
+          </div>
+        </article>
+
+        <article id="how-to-buy" class="card">
+          <h2>How to Buy – Attack the Yak</h2>
+          <p>
+            Swap, hold, meme. That’s it. Update this with your exact steps once your contract
+            address &amp; pools are live.
+          </p>
+          <ol class="tokenomics-list">
+            <li>Grab the official contract address from this site only.</li>
+            <li>Head to the linked DEX (see buttons above).</li>
+            <li>Connect your wallet and swap your base token for <strong>YIELDYAK</strong>.</li>
+            <li>Set a sensible slippage and confirm the trade.</li>
+            <li>Secure your bag. Then go meme on X and Reddit.</li>
+          </ol>
+          <div class="two-col-row">
+            <a class="btn btn-secondary" href="https://dex-link-here" target="_blank" rel="noopener noreferrer">
+              🦄 Open DEX
+            </a>
+            <a class="btn btn-ghost" href="https://dex-scan-link-here" target="_blank" rel="noopener noreferrer">
+              🔍 View contract
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="community" class="section">
+      <div class="section-grid">
+        <article class="card">
+          <h2>Community – Where the Herd Gathers</h2>
+          <p>
+            YIELDYAK is nothing without its herd. Join the community hubs to share memes,
+            alpha, and yak-brained strategies.
+          </p>
+          <div class="two-col-row">
+            <a class="btn btn-primary" href="https://x.com/your_yieldyak_handle" target="_blank" rel="noopener noreferrer">
+              🐦 X (Twitter)
+            </a>
+            <a class="btn btn-secondary" href="https://t.me/your_yieldyak_telegram" target="_blank" rel="noopener noreferrer">
+              💬 Telegram
+            </a>
+          </div>
+          <div class="tag-row">
+            <span class="tag">ATTACK THE YAK</span>
+            <span class="tag">LET IT YAK</span>
+            <span class="tag">No roadmap · Only vibes</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>Disclaimer</h2>
+          <p>
+            YIELDYAK is a speculative meme token. It is not an investment contract, not
+            securities, and not financial advice. Crypto is volatile. You can lose
+            everything.
+          </p>
+          <p>
+            Always verify contract addresses from multiple official sources and be
+            cautious of imposters attempting to leverage the <strong>Yield Yak</strong> name
+            from the existing DeFi protocol on Avalanche.
+          </p>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    &copy; <span id="year"></span> YIELDYAK. LET IT YAK · ATTACK THE YAK. Built by degen yak enjoyers.
+    Not affiliated with the Avalanche Yield Yak protocol.
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
