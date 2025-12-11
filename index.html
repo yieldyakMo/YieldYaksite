@@ -11,207 +11,507 @@
   <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --bg: #050815;
+      --bg-alt: #080f23;
+      --accent-yellow: #ffd43b;
+      --accent-cyan: #4fd4ff;
+      --accent-pink: #ff4fa3;
+      --card-bg: rgba(9, 16, 36, 0.96);
+      --card-border: rgba(151, 179, 255, 0.25);
+      --muted: rgba(226, 232, 255, 0.7);
+      --pill-bg: rgba(15, 27, 66, 0.95);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      background: #0a0f18;
-      color: white;
-      font-family: "Inter", sans-serif;
-      line-height: 1.6;
+      min-height: 100vh;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #ecf3ff;
+      background:
+        radial-gradient(circle at top left, #182952 0, transparent 55%),
+        radial-gradient(circle at bottom right, #1b283f 0, transparent 60%),
+        var(--bg);
     }
 
-    header {
-      text-align: center;
-      padding: 3rem 1rem 2rem;
+    a {
+      color: inherit;
     }
 
-    h1 {
-      font-size: 2.2rem;
-      margin-bottom: 0.8rem;
-      font-weight: 700;
+    .shell {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 1.6rem 1.4rem 3.5rem;
     }
 
-    .subtitle {
-      opacity: 0.75;
-      font-size: 1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .button-row {
+    /* Top nav / brand */
+    .top-row {
       display: flex;
-      justify-content: center;
+      align-items: center;
+      justify-content: space-between;
       gap: 1rem;
-      margin-top: 1.5rem;
+      margin-bottom: 1.4rem;
     }
 
-    a.button {
-      padding: 0.75rem 1.3rem;
-      border-radius: 10px;
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 20%, #fff7c2 0, transparent 55%),
+        conic-gradient(from 210deg, #40b9ff, #5bffb7, #ffd641, #ff4fa3, #40b9ff);
+      position: relative;
+      box-shadow: 0 0 18px rgba(79, 212, 255, 0.6);
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #050815 0, #081021 55%, #020308 100%);
+    }
+
+    .brand-text-main {
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .brand-text-sub {
+      font-size: 0.75rem;
+      opacity: 0.7;
+    }
+
+    .top-links {
+      display: flex;
+      gap: 0.9rem;
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+
+    .top-links a {
       text-decoration: none;
-      color: #000;
-      background: #ffd43b;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: radial-gradient(circle at top, rgba(255,255,255,0.12), transparent 60%);
+      backdrop-filter: blur(10px);
+    }
+
+    /* Hero */
+    header.hero {
+      text-align: left;
+      padding: 1.4rem 0 1.6rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      line-height: 1.05;
+      margin-bottom: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      background: linear-gradient(120deg, #ffffff, #fef1c7, #9ae6ff);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-sub {
+      max-width: 620px;
+      font-size: 0.98rem;
+      color: var(--muted);
+    }
+
+    .hero-sub strong {
+      color: #fef1c7;
       font-weight: 600;
     }
 
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin: 1.7rem 0 1.2rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.78rem 1.5rem;
+      border-radius: 999px;
+      border: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      color: #050815;
+      background: radial-gradient(circle at top, #ffe477, #ffc842);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 13px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    .btn-outline {
+      color: #e4f2ff;
+      background: rgba(14, 24, 52, 0.9);
+      border: 1px solid rgba(122, 186, 255, 0.6);
+      box-shadow: 0 0 18px rgba(79, 212, 255, 0.32);
+    }
+
+    .btn-outline:hover {
+      background: radial-gradient(circle at top, #16305c, #091124);
+    }
+
+    /* Pills under hero */
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      margin-top: 0.3rem;
+    }
+
+    .pill {
+      padding: 0.32rem 0.7rem;
+      border-radius: 999px;
+      background: var(--pill-bg);
+      border: 1px solid rgba(109, 140, 255, 0.4);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: var(--muted);
+    }
+
+    .pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #4ade80;
+      box-shadow: 0 0 12px rgba(74, 222, 128, 0.9);
+    }
+
+    /* Sections */
     main {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 2rem 1rem 4rem;
+      padding-top: 0.9rem;
     }
 
-    h2.section-label {
-      font-size: 1rem;
-      letter-spacing: 0.1em;
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      margin-top: 3rem;
-      opacity: 0.6;
+      margin: 2.4rem 0 0.4rem;
+      color: var(--muted);
     }
 
-    /* Card styles */
+    .section-label span {
+      color: var(--accent-yellow);
+    }
+
+    /* Cards */
     .card-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 1.2rem;
-      margin-top: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.1rem;
+      margin-top: 0.9rem;
     }
 
     .card {
-      padding: 1.2rem 1rem;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(6px);
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 1.1rem 1rem 1.2rem;
+      border: 1px solid var(--card-border);
+      box-shadow: 0 22px 45px rgba(0, 0, 0, 0.6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      opacity: 0.12;
+      background:
+        radial-gradient(circle at top left, #ffd43b 0, transparent 55%),
+        radial-gradient(circle at bottom right, #4fd4ff 0, transparent 60%);
+      mix-blend-mode: soft-light;
+      pointer-events: none;
     }
 
     .card-title {
-      font-size: 0.85rem;
-      letter-spacing: 0.08em;
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      margin-bottom: 0.3rem;
-      color: #ffd43b;
-      font-weight: 600;
+      margin-bottom: 0.32rem;
+      color: var(--accent-yellow);
+      position: relative;
+      z-index: 1;
     }
 
+    .card-body {
+      font-size: 0.9rem;
+      color: var(--muted);
+      position: relative;
+      z-index: 1;
+    }
+
+    .metric {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #ffffff;
+    }
+
+    .metric-label {
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+
+    .code-inline {
+      display: inline-block;
+      padding: 0.18rem 0.4rem;
+      border-radius: 6px;
+      background: rgba(10, 19, 45, 0.95);
+      border: 1px solid rgba(148, 163, 255, 0.5);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.76rem;
+      margin-top: 0.22rem;
+      word-break: break-all;
+    }
+
+    /* Chart embed */
     .chart-frame {
-      margin-top: 1.5rem;
-      border-radius: 20px;
+      margin-top: 1.4rem;
+      border-radius: 24px;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(148, 163, 255, 0.45);
+      box-shadow:
+        0 0 0 1px rgba(15, 23, 42, 0.8),
+        0 26px 55px rgba(0, 0, 0, 0.85);
+      background: radial-gradient(circle at top, #111827, #020617);
+    }
+
+    .chart-header {
+      padding: 0.8rem 1rem 0.4rem;
+      font-size: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+    }
+
+    .badge-live {
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(22, 163, 74, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.65);
+      font-size: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .badge-live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #4ade80;
+      box-shadow: 0 0 10px rgba(74, 222, 128, 0.9);
     }
 
     .chart-frame iframe {
       width: 100%;
-      height: 450px;
+      height: 440px;
+      border: none;
       display: block;
     }
 
     footer {
+      margin-top: 2.6rem;
+      padding-top: 1.7rem;
+      border-top: 1px solid rgba(15, 23, 42, 0.9);
+      font-size: 0.78rem;
+      color: var(--muted);
       text-align: center;
-      opacity: 0.45;
-      font-size: 0.85rem;
-      padding: 3rem 1rem;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      margin-top: 4rem;
+    }
+
+    @media (max-width: 640px) {
+      .top-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      header.hero {
+        text-align: left;
+      }
+      .hero-actions {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
   </style>
 </head>
 
 <body>
+  <div class="shell">
+    <!-- Top brand / nav -->
+    <div class="top-row">
+      <div class="brand-lockup">
+        <div class="brand-mark"></div>
+        <div>
+          <div class="brand-text-main">YIELDYAK</div>
+          <div class="brand-text-sub">Attack The Yak</div>
+        </div>
+      </div>
+      <div class="top-links">
+        <a href="https://nad.fun/token/0xD7a9B8259db6eca5D569f7260FA4878326cd7777" target="_blank">Nad.fun</a>
+        <a href="https://mevx.io/monad/0xD7a9B8259db6eca5D569f7260FA4878326cd7777" target="_blank">MevX</a>
+        <a href="https://monadvision.com/address/0xD7a9B8259db6eca5D569f7260FA4878326cd7777" target="_blank">Explorer</a>
+      </div>
+    </div>
 
-<header>
-  <h1>Attack The Yak and farm like you mean it.</h1>
-  <p class="subtitle">
-    Hyper-aggressive yield token for crypto degenerates.<br>
-    No hand-holding — just pure on-chain chaos.
-  </p>
+    <!-- Hero -->
+    <header class="hero">
+      <h1 class="hero-title">Attack The Yak and farm like you mean it.</h1>
+      <p class="hero-sub">
+        <strong>YieldYak</strong> is a hyper-aggressive yield token designed for crypto degenerates who actually read the charts.
+        No hand-holding, no training wheels — just tools for those already in the arena.
+      </p>
 
-  <div class="button-row">
-    <a href="https://mevx.io/monad/0xD7a9B8259db6eca5D569f7260FA4878326cd7777" target="_blank" class="button">
-      Enter The Market
-    </a>
-    <a href="https://github.com/yieldyakMo/yieldyaksite" target="_blank" class="button" style="background:#70e1ff;">
-      View GitHub
-    </a>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://mevx.io/monad/0xD7a9B8259db6eca5D569f7260FA4878326cd7777" target="_blank">
+          Enter The Market
+        </a>
+        <a class="btn btn-outline" href="https://github.com/yieldyakMo/yieldyaksite" target="_blank">
+          View GitHub Repo
+        </a>
+      </div>
+
+      <div class="meta-row">
+        <div class="pill">
+          <span class="pill-dot"></span>
+          <span>Live on-chain · Community driven</span>
+        </div>
+        <div class="pill">
+          <span>High risk · High volatility</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- Utility / why it exists -->
+      <div class="section-label">Utility · <span>Why The Yak Exists</span></div>
+      <div class="card-row">
+        <article class="card">
+          <div class="card-title">Protocol Fuel</div>
+          <div class="card-body">
+            Use YieldYak as a utility layer for fees, rewards, and incentives across DeFi tools and on-chain games.
+            One token, multiple ways to weaponize it.
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-title">Alignment</div>
+          <div class="card-body">
+            Keep power users, early degenerates, and core contributors aligned around the same asset instead of
+            scattering attention across random hype.
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-title">Expansion</div>
+          <div class="card-body">
+            Designed with integrations in mind — staking pools, LP incentives, loot drops, and on-chain games
+            can all route through YieldYak.
+          </div>
+        </article>
+      </div>
+
+      <!-- Markets -->
+      <div class="section-label" style="margin-top: 2.6rem;">Markets · <span>Yak Status</span></div>
+      <div class="card-row">
+        <article class="card">
+          <div class="card-title">Price & Volume (Live Soon)</div>
+          <div class="card-body">
+            <div class="metric" id="yak-price">$--.--</div>
+            <div class="metric-label" id="yak-pct">24h: --%</div>
+            <div class="metric-label" id="yak-volume">Vol: --</div>
+            <p style="margin-top:0.7rem; font-size:0.8rem; opacity:0.74;">
+              Live market data will plug in once a public JSON endpoint is available. For now,
+              trade directly on MevX or Nad.fun using the contract below.
+            </p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-title">DEX</div>
+          <div class="card-body">
+            Primary liquidity currently sits on MevX and Nad.fun. Always verify the contract address
+            before trading — the yak doesn’t refund copycats.
+            <div class="code-inline">
+              0xD7a9B8259db6eca5D569f7260FA4878326cd7777
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Chart embed -->
+      <div class="chart-frame">
+        <div class="chart-header">
+          <span>YAK / WMON · MevX chart embed</span>
+          <span class="badge-live">
+            <span class="badge-live-dot"></span>
+            Live feed
+          </span>
+        </div>
+        <iframe
+          src="https://mevx.io/monad/0xD7a9B8259db6eca5D569f7260FA4878326cd7777"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </main>
+
+    <footer>
+      <div>© <span id="year"></span> YieldYak · Attack The Yak.</div>
+      <div>Smart traders only. Not financial advice. Don’t attack the yak with rent money.</div>
+    </footer>
   </div>
-</header>
 
-<main>
+  <script>
+    // Footer year
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-  <!-- UTILITY SECTION -->
-  <h2 class="section-label">Utility • Why The Yak Exists</h2>
+    // Placeholder market values until a stable price API is available
+    function loadYakMarketData() {
+      document.getElementById("yak-price").textContent = "$--.--";
+      document.getElementById("yak-pct").textContent = "24h: --%";
+      document.getElementById("yak-volume").textContent = "Vol: --";
+    }
 
-  <div class="card-row">
-    <div class="card">
-      <div class="card-title">Protocol Fuel</div>
-      Use YieldYak as a utility layer for fees, rewards, and incentives across DeFi tools and on-chain games.
-    </div>
-
-    <div class="card">
-      <div class="card-title">Alignment</div>
-      Power users, early degenerates, and core contributors stay aligned under a shared token economy.
-    </div>
-
-    <div class="card">
-      <div class="card-title">Expansion</div>
-      LP incentives, staking pools, and integrations allow YieldYak to plug into any on-chain system.
-    </div>
-  </div>
-
-  <!-- MARKET SECTION -->
-  <h2 class="section-label">Markets • Yak Status</h2>
-
-  <div class="card-row">
-    <div class="card">
-      <div class="card-title">Price & Volume (Live Soon)</div>
-      <strong id="yak-price">$--.--</strong><br>
-      <span id="yak-pct">24h: --%</span><br>
-      <span id="yak-volume">Vol: --</span>
-    </div>
-
-    <div class="card">
-      <div class="card-title">DEX</div>
-      Primary liquidity resides on decentralized exchanges. Always verify the contract:
-      <br><br>
-      <code>0xD7a9B8259db6eca5D569f7260FA4878326cd7777</code>
-    </div>
-  </div>
-
-  <!-- LIVE CHART EMBED -->
-  <div class="chart-frame">
-    <iframe
-      src="https://mevx.io/monad/0xD7a9B8259db6eca5D569f7260FA4878326cd7777"
-      loading="lazy"
-      referrerpolicy="no-referrer"
-      frameborder="0"
-      allowfullscreen>
-    </iframe>
-  </div>
-
-</main>
-
-<!-- FOOTER -->
-<footer>
-  <span>© <span id="year"></span> YieldYak · Attack The Yak.</span><br>
-  <span>High risk, high degen. Do your own research.</span>
-</footer>
-
-<script>
-  // Footer year
-  document.getElementById("year").textContent = new Date().getFullYear();
-
-  // Placeholder market values until real API is available
-  function loadYakMarketData() {
-    document.getElementById("yak-price").textContent = "$--.--";
-    document.getElementById("yak-pct").textContent = "24h: --%";
-    document.getElementById("yak-volume").textContent = "Vol: --";
-  }
-
-  loadYakMarketData();
-</script>
-
+    loadYakMarketData();
+  </script>
 </body>
 </html>
 
