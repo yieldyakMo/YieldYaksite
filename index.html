@@ -11,19 +11,18 @@
   <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
       --bg: #050815;
-      --bg-alt: #080f23;
       --accent-yellow: #ffd43b;
       --accent-cyan: #4fd4ff;
       --accent-pink: #ff4fa3;
       --card-bg: rgba(9, 16, 36, 0.96);
       --card-border: rgba(151, 179, 255, 0.25);
-      --muted: rgba(226, 232, 255, 0.7);
-      --pill-bg: rgba(15, 27, 66, 0.95);
+      --muted: rgba(226, 232, 255, 0.76);
+      --pill-bg: rgba(10, 19, 45, 0.98);
     }
 
     * {
@@ -36,8 +35,8 @@
       font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       color: #ecf3ff;
       background:
-        radial-gradient(circle at top left, #182952 0, transparent 55%),
-        radial-gradient(circle at bottom right, #1b283f 0, transparent 60%),
+        radial-gradient(circle at top left, #1e293b 0, transparent 55%),
+        radial-gradient(circle at bottom right, #020617 0, transparent 60%),
         var(--bg);
     }
 
@@ -51,7 +50,7 @@
       padding: 1.6rem 1.4rem 3.5rem;
     }
 
-    /* Top nav / brand */
+    /* Top brand / nav */
     .top-row {
       display: flex;
       align-items: center;
@@ -63,26 +62,17 @@
     .brand-lockup {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.75rem;
     }
 
-    .brand-mark {
-      width: 34px;
-      height: 34px;
-      border-radius: 999px;
-      background:
-        radial-gradient(circle at 30% 20%, #fff7c2 0, transparent 55%),
-        conic-gradient(from 210deg, #40b9ff, #5bffb7, #ffd641, #ff4fa3, #40b9ff);
-      position: relative;
-      box-shadow: 0 0 18px rgba(79, 212, 255, 0.6);
-    }
-
-    .brand-mark::after {
-      content: "";
-      position: absolute;
-      inset: 6px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 30%, #050815 0, #081021 55%, #020308 100%);
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow:
+        0 0 0 1px rgba(15, 23, 42, 0.9),
+        0 0 20px rgba(79, 212, 255, 0.6);
     }
 
     .brand-text-main {
@@ -99,60 +89,121 @@
 
     .top-links {
       display: flex;
-      gap: 0.9rem;
+      gap: 0.7rem;
       font-size: 0.8rem;
-      opacity: 0.7;
+      opacity: 0.9;
     }
 
     .top-links a {
       text-decoration: none;
-      padding: 0.25rem 0.7rem;
+      padding: 0.32rem 0.75rem;
       border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: radial-gradient(circle at top, rgba(255,255,255,0.12), transparent 60%);
+      border: 1px solid rgba(148, 163, 255, 0.4);
+      background:
+        radial-gradient(circle at top, rgba(248, 250, 252, 0.18), transparent 60%),
+        rgba(15, 23, 42, 0.96);
       backdrop-filter: blur(10px);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .top-links a:hover {
+      border-color: rgba(248, 250, 252, 0.88);
     }
 
     /* Hero */
     header.hero {
-      text-align: left;
-      padding: 1.4rem 0 1.6rem;
+      padding: 0.9rem 0 1.9rem;
+      position: relative;
+    }
+
+    .hero-glow {
+      position: absolute;
+      inset: -120px -80px auto;
+      pointer-events: none;
+      opacity: 0.5;
+      background:
+        radial-gradient(circle at top left, rgba(94, 234, 212, 0.3), transparent 60%),
+        radial-gradient(circle at top right, rgba(129, 140, 248, 0.35), transparent 65%);
+      filter: blur(26px);
+      z-index: -1;
     }
 
     .hero-title {
-      font-size: clamp(2.2rem, 4vw, 3rem);
+      font-size: clamp(2.4rem, 4.5vw, 3.4rem);
       line-height: 1.05;
-      margin-bottom: 0.8rem;
+      margin: 0 0 0.9rem;
       font-weight: 800;
       letter-spacing: 0.02em;
-      background: linear-gradient(120deg, #ffffff, #fef1c7, #9ae6ff);
+      background: conic-gradient(
+        from 210deg,
+        #ffffff,
+        #fef3c7,
+        #9ae6ff,
+        #f9a8d4,
+        #ffffff
+      );
       -webkit-background-clip: text;
       color: transparent;
+      text-shadow:
+        0 0 22px rgba(148, 163, 255, 0.55),
+        0 18px 40px rgba(15, 23, 42, 0.9);
     }
 
     .hero-sub {
-      max-width: 620px;
+      max-width: 640px;
       font-size: 0.98rem;
       color: var(--muted);
     }
 
     .hero-sub strong {
-      color: #fef1c7;
+      color: #fef3c7;
       font-weight: 600;
+    }
+
+    .hero-warning-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.3rem;
+      align-items: center;
+    }
+
+    .chip-warning {
+      padding: 0.3rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      border: 1px solid rgba(248, 113, 113, 0.75);
+      background: linear-gradient(to right, rgba(248, 113, 113, 0.12), rgba(248, 250, 252, 0.02));
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: #fecaca;
+    }
+
+    .chip-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #f97373;
+      box-shadow: 0 0 12px rgba(248, 113, 113, 0.9);
     }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.8rem;
-      margin: 1.7rem 0 1.2rem;
+      gap: 0.9rem;
+      margin: 1.6rem 0 0.8rem;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0.78rem 1.5rem;
+      padding: 0.78rem 1.6rem;
       border-radius: 999px;
       border: none;
       font-size: 0.9rem;
@@ -165,40 +216,44 @@
 
     .btn-primary {
       color: #050815;
-      background: radial-gradient(circle at top, #ffe477, #ffc842);
-      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
+      background:
+        radial-gradient(circle at top, #ffe477, #ffc842);
+      box-shadow:
+        0 0 0 1px rgba(15, 23, 42, 0.9),
+        0 12px 28px rgba(0, 0, 0, 0.7);
     }
 
     .btn-primary:hover {
       transform: translateY(-1px);
-      box-shadow: 0 13px 30px rgba(0, 0, 0, 0.6);
+      box-shadow:
+        0 0 0 1px rgba(15, 23, 42, 0.9),
+        0 16px 36px rgba(0, 0, 0, 0.85);
     }
 
     .btn-outline {
       color: #e4f2ff;
-      background: rgba(14, 24, 52, 0.9);
-      border: 1px solid rgba(122, 186, 255, 0.6);
-      box-shadow: 0 0 18px rgba(79, 212, 255, 0.32);
+      background: rgba(15, 23, 42, 0.96);
+      border: 1px solid rgba(129, 212, 255, 0.9);
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.5);
     }
 
     .btn-outline:hover {
-      background: radial-gradient(circle at top, #16305c, #091124);
+      background: radial-gradient(circle at top, #1e293b, #020617);
     }
 
-    /* Pills under hero */
     .meta-row {
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
       font-size: 0.78rem;
-      margin-top: 0.3rem;
+      margin-top: 0.6rem;
     }
 
     .pill {
-      padding: 0.32rem 0.7rem;
+      padding: 0.32rem 0.75rem;
       border-radius: 999px;
       background: var(--pill-bg);
-      border: 1px solid rgba(109, 140, 255, 0.4);
+      border: 1px solid rgba(109, 140, 255, 0.5);
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;
@@ -219,8 +274,8 @@
     }
 
     .section-label {
-      font-size: 0.75rem;
-      letter-spacing: 0.18em;
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       margin: 2.4rem 0 0.4rem;
       color: var(--muted);
@@ -243,7 +298,7 @@
       border-radius: 18px;
       padding: 1.1rem 1rem 1.2rem;
       border: 1px solid var(--card-border);
-      box-shadow: 0 22px 45px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 22px 45px rgba(0, 0, 0, 0.75);
       position: relative;
       overflow: hidden;
     }
@@ -252,7 +307,7 @@
       content: "";
       position: absolute;
       inset: -40%;
-      opacity: 0.12;
+      opacity: 0.1;
       background:
         radial-gradient(circle at top left, #ffd43b 0, transparent 55%),
         radial-gradient(circle at bottom right, #4fd4ff 0, transparent 60%);
@@ -261,7 +316,7 @@
     }
 
     .card-title {
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;
       margin-bottom: 0.32rem;
@@ -285,7 +340,7 @@
 
     .metric-label {
       font-size: 0.8rem;
-      opacity: 0.7;
+      opacity: 0.78;
     }
 
     .code-inline {
@@ -296,7 +351,7 @@
       border: 1px solid rgba(148, 163, 255, 0.5);
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size: 0.76rem;
-      margin-top: 0.22rem;
+      margin-top: 0.35rem;
       word-break: break-all;
     }
 
@@ -307,8 +362,8 @@
       overflow: hidden;
       border: 1px solid rgba(148, 163, 255, 0.45);
       box-shadow:
-        0 0 0 1px rgba(15, 23, 42, 0.8),
-        0 26px 55px rgba(0, 0, 0, 0.85);
+        0 0 0 1px rgba(15, 23, 42, 0.9),
+        0 26px 55px rgba(0, 0, 0, 0.9);
       background: radial-gradient(circle at top, #111827, #020617);
     }
 
@@ -368,6 +423,9 @@
         flex-direction: column;
         align-items: flex-start;
       }
+      .top-links {
+        flex-wrap: wrap;
+      }
     }
   </style>
 </head>
@@ -377,33 +435,50 @@
     <!-- Top brand / nav -->
     <div class="top-row">
       <div class="brand-lockup">
-        <div class="brand-mark"></div>
+        <img src="assets/yieldyak-logo.png" alt="Yak Logo" class="brand-logo" />
         <div>
           <div class="brand-text-main">YIELDYAK</div>
           <div class="brand-text-sub">Attack The Yak</div>
         </div>
       </div>
       <div class="top-links">
+        <a href="https://twitter.com/YieldYakMonad" target="_blank">Twitter / X</a>
         <a href="https://nad.fun/token/0xD7a9B8259db6eca5D569f7260FA4878326cd7777" target="_blank">Nad.fun</a>
         <a href="https://mevx.io/monad/0xD7a9B8259db6eca5D569f7260FA4878326cd7777" target="_blank">MevX</a>
-        <a href="https://monadvision.com/address/0xD7a9B8259db6eca5D569f7260FA4878326cd7777" target="_blank">Explorer</a>
       </div>
     </div>
 
     <!-- Hero -->
     <header class="hero">
+      <div class="hero-glow"></div>
+
       <h1 class="hero-title">Attack The Yak and farm like you mean it.</h1>
+
       <p class="hero-sub">
-        <strong>YieldYak</strong> is a hyper-aggressive yield token designed for crypto degenerates who actually read the charts.
-        No hand-holding, no training wheels — just tools for those already in the arena.
+        <strong>YieldYak</strong> is a hyper-aggressive yield token designed for crypto degenerates who actually read
+        the charts. No hand-holding, no training wheels — just tools for those already in the arena.
       </p>
 
+      <div class="hero-warning-row">
+        <div class="chip-warning">
+          <span class="chip-dot"></span>
+          <span>DEGEN WARNING</span>
+        </div>
+        <span style="font-size:0.8rem; color:var(--muted);">
+          Smart traders only. No exit liquidity guaranteed. Don’t attack the yak with rent money.
+        </span>
+      </div>
+
       <div class="hero-actions">
-        <a class="btn btn-primary" href="https://mevx.io/monad/0xD7a9B8259db6eca5D569f7260FA4878326cd7777" target="_blank">
+        <a class="btn btn-primary"
+           href="https://mevx.io/monad/0xD7a9B8259db6eca5D569f7260FA4878326cd7777"
+           target="_blank">
           Enter The Market
         </a>
-        <a class="btn btn-outline" href="https://github.com/yieldyakMo/yieldyaksite" target="_blank">
-          View GitHub Repo
+        <a class="btn btn-outline"
+           href="https://nad.fun/token/0xD7a9B8259db6eca5D569f7260FA4878326cd7777"
+           target="_blank">
+          View Nad.fun Listing
         </a>
       </div>
 
@@ -495,7 +570,7 @@
 
     <footer>
       <div>© <span id="year"></span> YieldYak · Attack The Yak.</div>
-      <div>Smart traders only. Not financial advice. Don’t attack the yak with rent money.</div>
+      <div>High risk, high degen. Do your own research.</div>
     </footer>
   </div>
 
@@ -503,7 +578,7 @@
     // Footer year
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Placeholder market values until a stable price API is available
+    // Placeholder market values until a stable price API is wired in
     function loadYakMarketData() {
       document.getElementById("yak-price").textContent = "$--.--";
       document.getElementById("yak-pct").textContent = "24h: --%";
