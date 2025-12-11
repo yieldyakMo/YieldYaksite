@@ -639,18 +639,6 @@
       </section>
     </main>
 
-    <footer>
-      <span>© <span id="year"></span> YieldYak · Attack The Yak.</span>
-      <span>High risk, high degen. Do your own research.</span>
-    </footer>
-  </div>
-
-  <script>
-    // Footer year
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-  <script>
-    // Footer year
      <footer>
       <span>© <span id="year"></span> YieldYak · Attack The Yak.</span>
       <span>High risk, high degen. Do your own research.</span>
@@ -662,7 +650,7 @@
     document.getElementById("year").textContent = new Date().getFullYear();
 
     const TOKEN_ADDRESS = "0xD7a9B8259db6eca5D569f7260FA4878326cd7777";
-    const BLOCKVISION_API_KEY = "YOUR_BLOCKVISION_API_KEY_HERE"; // paste your key here
+    const BLOCKVISION_API_KEY = "36gCyv78FWCjrAwpF5sjKyIUy8t";
 
     async function loadYakMarketData() {
       try {
@@ -684,7 +672,6 @@
         console.log("BlockVision market data:", json);
 
         const data = json.result || json.data || json;
-
         if (!data || !data.priceInUsd) {
           console.warn("Unexpected market data shape", data);
           return;
@@ -696,32 +683,23 @@
         const hour24 = market.hour24 || market.hour1 || market.m30 || {};
         const pctChange = parseFloat(hour24.priceChange ?? 0);
 
-        const priceEl = document.getElementById("yak-price");
+        document.getElementById("yak-price").textContent =
+          isFinite(price) ? `$${price.toFixed(6)}` : "$--.--";
+
         const pctEl = document.getElementById("yak-pct");
-        const volEl = document.getElementById("yak-volume");
+        const sign = pctChange > 0 ? "+" : "";
+        pctEl.textContent = `24h: ${sign}${pctChange.toFixed(2)}%`;
 
-        if (priceEl) {
-          priceEl.textContent = isFinite(price) ? `$${price.toFixed(6)}` : "$--.--";
-        }
+        document.getElementById("yak-volume").textContent =
+          typeof volume24h === "number"
+          ? `$${volume24h.toLocaleString()}`
+          : "$--,--";
 
-        if (pctEl) {
-          const sign = pctChange > 0 ? "+" : "";
-          pctEl.textContent = `24h: ${sign}${pctChange.toFixed(2)}%`;
-        }
-
-        if (volEl) {
-          if (typeof volume24h === "number") {
-            volEl.textContent = `$${volume24h.toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
-          } else {
-            volEl.textContent = "$--,--";
-          }
-        }
       } catch (err) {
         console.error("Failed to load market data:", err);
       }
     }
 
-    // Kick it off on page load
     loadYakMarketData();
   </script>
 </body>
