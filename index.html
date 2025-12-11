@@ -649,18 +649,76 @@
     // Footer year
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Placeholder for when you connect a real price API later
+  <script>
+    // Footer year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const TOKEN_ADDRESS = "0xD7a9B8259db6eca5D569f7260FA4878326cd7777";
+    const BLOCKVISION_API_KEY = 36gCyv78FWCjrAwpF5sjKyluY8t; 
+
     async function loadYakMarketData() {
-      // Example shape for later:
-      // const res = await fetch("https://api.example.com/path_to_your_pair");
-      // const data = await res.json();
-      // document.getElementById("yak-price").textContent = "$" + data.price;
-      // document.getElementById("yak-pct").textContent = "24h: " + data.change24h + "%";
-      // document.getElementById("yak-volume").textContent = "$" + data.volume24h;
+      try {
+        const url = new URL("https://api.blockvision.org/v2/monad/token/market/data");
+        url.searchParams.set("token", TOKEN_ADDRESS);
+
+        const res = await fetch(url.toString(), {
+          headers: {
+            "X-API-KEY": BLOCKVISION_API_KEY
+          }
+        });
+
+        if (!res.ok) {
+          console.error("BlockVision error status:", res.status);
+          return;
+        }
+
+        const json = await res.json();
+        console.log("BlockVision market data:", json);
+
+        // Most BlockVision endpoints use { code, message, result: {...} }
+        const data = json.result || json.data || json; 
+
+        if (!data || !data.priceInUsd) {
+          console.warn("Unexpected market data shape", data);
+          return;
+        }
+
+        // Raw values
+        const price = parseFloat(data.priceInUsd);
+        const volume24h = data.volume24H;
+        const market = data.market || {};
+        const hour24 = market.hour24 || market.hour1 || market.m30 || {};
+
+        const pctChange = parseFloat(hour24.priceChange ?? 0);
+
+        // Update DOM
+        const priceEl = document.getElementById("yak-price");
+        const pctEl = document.getElementById("yak-pct");
+        const volEl = document.getElementById("yak-volume");
+
+        if (priceEl) {
+          priceEl.textContent = isFinite(price) ? `$${price.toFixed(6)}` : "$--.--";
+        }
+
+        if (pctEl) {
+          const sign = pctChange > 0 ? "+" : "";
+          pctEl.textContent = `24h: ${sign}${pctChange.toFixed(2)}%`;
+        }
+
+        if (volEl) {
+          if (typeof volume24h === "number") {
+            volEl.textContent = `$${volume24h.toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
+          } else {
+            volEl.textContent = "$--,--";
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load market data:", err);
+      }
     }
 
-    // Call it once you wire in a real endpoint
-    // loadYakMarketData();
+    // Call it on page load
+    loadYakMarketData();
   </script>
 </body>
 </html>
