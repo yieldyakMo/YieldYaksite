@@ -651,10 +651,18 @@
 
   <script>
     // Footer year
+     <footer>
+      <span>© <span id="year"></span> YieldYak · Attack The Yak.</span>
+      <span>High risk, high degen. Do your own research.</span>
+    </footer>
+  </div>
+
+  <script>
+    // Footer year
     document.getElementById("year").textContent = new Date().getFullYear();
 
     const TOKEN_ADDRESS = "0xD7a9B8259db6eca5D569f7260FA4878326cd7777";
-    const BLOCKVISION_API_KEY = "36gCyv78FWCjrAwpF5sjKyluY8t"; 
+    const BLOCKVISION_API_KEY = "YOUR_BLOCKVISION_API_KEY_HERE"; // paste your key here
 
     async function loadYakMarketData() {
       try {
@@ -675,23 +683,19 @@
         const json = await res.json();
         console.log("BlockVision market data:", json);
 
-        // Most BlockVision endpoints use { code, message, result: {...} }
-        const data = json.result || json.data || json; 
+        const data = json.result || json.data || json;
 
         if (!data || !data.priceInUsd) {
           console.warn("Unexpected market data shape", data);
           return;
         }
 
-        // Raw values
         const price = parseFloat(data.priceInUsd);
         const volume24h = data.volume24H;
         const market = data.market || {};
         const hour24 = market.hour24 || market.hour1 || market.m30 || {};
-
         const pctChange = parseFloat(hour24.priceChange ?? 0);
 
-        // Update DOM
         const priceEl = document.getElementById("yak-price");
         const pctEl = document.getElementById("yak-pct");
         const volEl = document.getElementById("yak-volume");
@@ -717,7 +721,7 @@
       }
     }
 
-    // Call it on page load
+    // Kick it off on page load
     loadYakMarketData();
   </script>
 </body>
